@@ -1,0 +1,20 @@
+name: Drupal Coder + PHPCS
+# This workflow is triggered on pull requests and will run again for new commits to the PR branch
+on: [pull_request]
+# Each job in a workflow executes in the same virtual environment
+jobs:
+  phpcs:
+    name: Drupal Coder + PHPCS
+    runs-on: ubuntu-latest
+    steps:
+      # actions/checkout is required to access repo code. Use @v1 for stable. See https://help.github.com/en/github/automating-your-workflow-with-github-actions/configuring-a-workflow#referencing-actions-in-your-workflow
+      - uses: actions/checkout@v1
+        # shallow clone only latest version
+        with:
+          fetch-depth: 1
+      - run: |
+          composer global require drupal/coder:^8.3.1  && composer global require dealerdirect/phpcodesniffer-composer-installer --no-plugins --no-scripts; \
+          #    export PATH="$PATH:~/.composer/vendor/bin"; \
+          echo ::add-path::~/.composer/vendor/bin; \
+      - run: phpcs --config-set installed_paths $HOME/.composer/vendor/drupal/coder/coder_sniffer;
+      - run: phpcs --standard=Drupal .
