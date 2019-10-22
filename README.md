@@ -3,5 +3,3 @@
 This workflow is defined in `.github/workflows/phpcs.yml`
 
 It runs on Pull Requests.
-
-
