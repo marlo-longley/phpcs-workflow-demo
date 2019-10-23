@@ -16,6 +16,6 @@ jobs:
       # ::add-path is a built-in Github Action command. See https://help.github.com/en/github/automating-your-workflow-with-github-actions/development-tools-for-github-actions#add-a-system-path-add-path
       - run: |
           composer global require drupal/coder:^8.3.1  && composer global require dealerdirect/phpcodesniffer-composer-installer --no-plugins --no-scripts; \
-          echo ::add-path::~/.composer/vendor/bin;
+          echo ::add-path::$HOME/.composer/vendor/bin;
       - run: phpcs --config-set installed_paths $HOME/.composer/vendor/drupal/coder/coder_sniffer;
-      - run: phpcs --standard=Drupal .
+      - run: phpcs --standard=Drupal $GITHUB_WORKSPACE
